@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "71028966356",
+    "project_id": "paynow-f5411",
+    "storage_bucket": "paynow-f5411.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71028966356:android:a0fda3d41b17b1628b0c41",
+        "android_client_info": {
+          "package_name": "com.paynow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiJw6YV_U5IqXnQrCqM1b5LztdgznbHF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
