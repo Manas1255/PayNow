@@ -1,3 +1,4 @@
+import {getAuth, signOut} from '@react-native-firebase/auth';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {FC} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
@@ -9,6 +10,13 @@ import {color} from '../utils/theme';
 type HomeScreenProps = NativeStackScreenProps<HomeStackParams, 'HomeScreen'>;
 
 const HomeScreen: FC<HomeScreenProps> = () => {
+  const handleLogout = async () => {
+    try {
+      await signOut(getAuth());
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       <View
@@ -71,7 +79,8 @@ const HomeScreen: FC<HomeScreenProps> = () => {
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 8,
-          }}>
+          }}
+          onPress={handleLogout}>
           <Text style={{color: color.white}}>Request Money</Text>
         </TouchableOpacity>
       </View>
