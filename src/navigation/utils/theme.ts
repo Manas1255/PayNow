@@ -2,6 +2,7 @@ export const color = {
   blue: '#1A87DD',
   grey: '#1A1A1A',
   white: '#FFFFFF',
+  yellow: '#F8BB18',
 };
 
 export const textSize = {

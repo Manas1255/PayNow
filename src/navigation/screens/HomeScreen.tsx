@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {FC} from 'react';
-import {Image, Text, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {HomeStackParams} from '../HomeStack';
 import {dummyProfilePic, NotificationsIcon} from '../assets';
@@ -14,7 +14,7 @@ const HomeScreen: FC<HomeScreenProps> = () => {
       <View
         style={{
           width: '100%',
-          flex: 0.4,
+          flex: 0.3,
           backgroundColor: '#3491DB',
           padding: 24,
         }}>
@@ -34,10 +34,59 @@ const HomeScreen: FC<HomeScreenProps> = () => {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
+            marginTop: 24,
+            alignItems: 'center',
           }}>
-          <Text>$1234</Text>
+          <Text style={{color: color.white, fontSize: 32, fontWeight: 'bold'}}>
+            $123.4
+          </Text>
           <NotificationsIcon />
         </View>
+      </View>
+
+      <View
+        style={{
+          marginTop: 32,
+          paddingHorizontal: 8,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: color.yellow,
+            width: '47%',
+            height: 50,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 8,
+          }}>
+          <Text style={{color: color.white}}>Send Money</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: color.blue,
+            width: '47%',
+            height: 50,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 8,
+          }}>
+          <Text style={{color: color.white}}>Request Money</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          paddingHorizontal: 8,
+          marginTop: 32,
+        }}>
+        <Text style={{fontWeight: 'bold', fontSize: 16}}>
+          Last Transactions
+        </Text>
+        <Text style={{color: color.blue, fontSize: 16}}>View All</Text>
       </View>
     </SafeAreaView>
   );
