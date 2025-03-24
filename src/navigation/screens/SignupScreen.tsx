@@ -13,6 +13,7 @@ import {AuthStackParams} from '../AuthStack';
 import {color, textSize} from '../utils/theme';
 
 import {getAuth} from '@react-native-firebase/auth';
+import {signInWithGoogle} from '../services/authService';
 
 type SignupScreenProps = NativeStackScreenProps<
   AuthStackParams,
@@ -25,6 +26,16 @@ const SignupScreen: FC<SignupScreenProps> = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const onSignupWithGooglePress = async () => {
+    try {
+      await signInWithGoogle();
+      console.log('Google Sign-In Success');
+      // No navigation needed, RootStackNavigator will handle it
+    } catch (error) {
+      Alert.alert('Login Failed', error.message);
+    }
+  };
 
   const onLoginPress = () => {
     navigation.navigate('LoginScreen');
@@ -111,7 +122,9 @@ const SignupScreen: FC<SignupScreenProps> = ({navigation}) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={{alignSelf: 'center'}}>
+        <TouchableOpacity
+          style={{alignSelf: 'center'}}
+          onPress={onSignupWithGooglePress}>
           <Text style={{color: color.blue, fontSize: textSize.medium}}>
             Sign up with google
           </Text>

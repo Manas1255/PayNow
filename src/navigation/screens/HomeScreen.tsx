@@ -4,7 +4,12 @@ import {FC} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {HomeStackParams} from '../HomeStack';
-import {dummyProfilePic, NotificationsIcon} from '../assets';
+import {
+  dummyProfilePic,
+  NotificationsIcon,
+  RequestIcon,
+  SendIcon,
+} from '../assets';
 import {color} from '../utils/theme';
 
 type HomeScreenProps = NativeStackScreenProps<HomeStackParams, 'HomeScreen'>;
@@ -22,7 +27,7 @@ const HomeScreen: FC<HomeScreenProps> = () => {
       <View
         style={{
           width: '100%',
-          flex: 0.3,
+          //flex: 0.3,
           backgroundColor: '#3491DB',
           padding: 24,
         }}>
@@ -67,8 +72,12 @@ const HomeScreen: FC<HomeScreenProps> = () => {
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 8,
+            flexDirection: 'row',
           }}>
-          <Text style={{color: color.white}}>Send Money</Text>
+          <SendIcon />
+          <View style={{marginLeft: 4}}>
+            <Text style={{color: color.white}}>Send Money</Text>
+          </View>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -79,9 +88,13 @@ const HomeScreen: FC<HomeScreenProps> = () => {
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 8,
+            flexDirection: 'row',
           }}
           onPress={handleLogout}>
-          <Text style={{color: color.white}}>Request Money</Text>
+          <RequestIcon />
+          <View style={{marginLeft: 4}}>
+            <Text style={{color: color.white}}>Request Money</Text>
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -89,13 +102,34 @@ const HomeScreen: FC<HomeScreenProps> = () => {
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          paddingHorizontal: 8,
+          paddingHorizontal: 16,
           marginTop: 32,
         }}>
         <Text style={{fontWeight: 'bold', fontSize: 16}}>
           Last Transactions
         </Text>
         <Text style={{color: color.blue, fontSize: 16}}>View All</Text>
+      </View>
+
+      <View
+        style={{
+          paddingHorizontal: 16,
+          marginTop: 16,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <View style={{flexDirection: 'row'}}>
+          <Image source={dummyProfilePic} />
+          <View style={{marginLeft: 4}}>
+            <Text>Yara Khalil</Text>
+            <Text>May 4, 10:00 AM</Text>
+          </View>
+        </View>
+
+        <View>
+          <Text style={{fontWeight: 'bold'}}>-$15.00</Text>
+        </View>
       </View>
     </SafeAreaView>
   );

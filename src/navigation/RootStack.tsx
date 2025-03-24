@@ -1,4 +1,4 @@
-import {getAuth, onAuthStateChanged, User} from '@react-native-firebase/auth';
+import {getAuth, onAuthStateChanged} from '@react-native-firebase/auth';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, View} from 'react-native';
@@ -23,7 +23,7 @@ const RootStackNavigator = () => {
       setLoading(false);
     });
 
-    return unsubscribe; // Cleanup listener on unmount
+    return unsubscribe;
   }, []);
 
   if (loading) {
