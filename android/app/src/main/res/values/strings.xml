@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PayNow</string>
+    <string name="default_web_client_id">71028966356-1kmsblvs68s3i9mitnqmeu3vcu57ht8j.apps.googleusercontent.com</string>
+
 </resources>

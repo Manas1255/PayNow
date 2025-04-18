@@ -1,3 +1,4 @@
+import firestore from '@react-native-firebase/firestore';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {FC, useState} from 'react';
 import {
@@ -25,7 +26,7 @@ const SignupScreen: FC<SignupScreenProps> = ({navigation}) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
 
   const onSignupWithGooglePress = async () => {
     try {
@@ -43,10 +44,22 @@ const SignupScreen: FC<SignupScreenProps> = ({navigation}) => {
 
   const onSignupPress = async () => {
     try {
-      await getAuth().createUserWithEmailAndPassword(email, password);
+      const userCredential = await getAuth().createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+      const user = userCredential.user;
+
+      await firestore().collection('users').doc(user.uid).set({
+        email: user.email,
+        name: name,
+        balance: 2500,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      });
+
       Alert.alert('Success', 'User registered successfully!');
     } catch (error) {
-      Alert.alert('Error', 'Error while registering user');
+      Alert.alert('Error', error.message || 'Error while registering user');
     }
   };
   return (
@@ -55,6 +68,23 @@ const SignupScreen: FC<SignupScreenProps> = ({navigation}) => {
         <Text style={{fontSize: textSize.h1, textAlign: 'center'}}>
           Signup and start transferring
         </Text>
+      </View>
+
+      <View style={{marginTop: 32}}>
+        <Text>Name</Text>
+        <TextInput
+          placeholder="Enter your name"
+          value={name}
+          onChangeText={setName}
+          style={{
+            height: 48,
+            borderWidth: 0.3,
+            borderColor: 'grey',
+            borderRadius: 8,
+            padding: 10,
+            marginTop: 8,
+          }}
+        />
       </View>
 
       <View style={{marginTop: 32}}>
@@ -91,23 +121,6 @@ const SignupScreen: FC<SignupScreenProps> = ({navigation}) => {
           secureTextEntry={true}
         />
       </View>
-
-      {/* <View style={{marginTop: 32}}>
-        <Text>Confirm Password</Text>
-        <TextInput
-          placeholder="Confirm your password"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          style={{
-            height: 48,
-            borderWidth: 0.3,
-            borderColor: 'grey',
-            borderRadius: 8,
-            padding: 10,
-            marginTop: 8,
-          }}
-        />
-      </View> */}
 
       <View style={{flex: 0.3}}>
         <TouchableOpacity style={createAccountButton} onPress={onSignupPress}>
