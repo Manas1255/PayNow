@@ -1,13 +1,16 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {FC, useEffect, useState} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-
+import {FC, useEffect} from 'react';
 import {
-  collection,
-  FirebaseFirestoreTypes,
-  getDocs,
-  getFirestore,
-} from '@react-native-firebase/firestore';
+  ActivityIndicator,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../../store';
+import {fetchContacts} from '../../store/contactsSlice';
 import {dummyProfilePic, RequestIcon, SendIcon} from '../assets';
 import {ContactStackParams} from '../ContactStack';
 import {color} from '../utils/theme';
@@ -18,28 +21,20 @@ type ContactScreenProps = NativeStackScreenProps<
 >;
 
 const ContactScreen: FC<ContactScreenProps> = () => {
-  const [contacts, setContacts] = useState<
-    FirebaseFirestoreTypes.DocumentData[]
-  >([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const {users, loading, error} = useSelector(
+    (state: RootState) => state.contacts,
+  );
+
+  console.log('users ', users);
 
   useEffect(() => {
-    const fetchContacts = async () => {
-      try {
-        const db = getFirestore();
-        const snapshot = await getDocs(collection(db, 'users'));
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
-        const users = snapshot.docs.map(doc => doc.data());
-
-        if (users) {
-          setContacts(users);
-        }
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
-    fetchContacts();
-  }, []);
+  if (loading)
+    return <ActivityIndicator size="large" style={{marginTop: 50}} />;
+  if (error) return <Text>Error: {error}</Text>;
 
   return (
     <View style={{flex: 1}}>
@@ -62,8 +57,9 @@ const ContactScreen: FC<ContactScreenProps> = () => {
         }}
       />
 
-      {contacts.map(contact => (
+      {users?.map((user, index) => (
         <View
+          key={index}
           style={{
             paddingHorizontal: 16,
             marginTop: 16,
@@ -74,8 +70,8 @@ const ContactScreen: FC<ContactScreenProps> = () => {
           <View style={{flexDirection: 'row'}}>
             <Image source={dummyProfilePic} />
             <View style={{marginLeft: 4}}>
-              <Text>{contact.name}</Text>
-              <Text>{contact.email}</Text>
+              <Text>{user.name}</Text>
+              <Text>{user.email}</Text>
             </View>
           </View>
 

@@ -12,7 +12,18 @@ export const fetchContacts = createAsyncThunk(
       const db = getFirestore();
       const snapshot = await getDocs(collection(db, 'users'));
 
-      const users = snapshot.docs.map(doc => doc.data());
+      const users = snapshot.docs.map(doc => {
+        const data = doc.data();
+
+        console.log('data ', data);
+
+        return {
+          id: doc.id,
+          ...data,
+          createdAt: data.createdAt?.toDate().toISOString() || null,
+        };
+      });
+
       return users;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -22,7 +33,11 @@ export const fetchContacts = createAsyncThunk(
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: {},
+  initialState: {
+    users: [],
+    loading: false,
+    error: null,
+  },
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchContacts.pending, state => {
@@ -31,7 +46,7 @@ const contactsSlice = createSlice({
     }),
       builder.addCase(fetchContacts.fulfilled, (state, action) => {
         state.loading = false;
-        state.contacts = action.payload;
+        state.users = action.payload;
       }),
       builder.addCase(fetchContacts.rejected, (state, action) => {
         state.loading = false;

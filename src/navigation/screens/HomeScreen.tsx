@@ -15,6 +15,11 @@ import {color} from '../utils/theme';
 type HomeScreenProps = NativeStackScreenProps<HomeStackParams, 'HomeScreen'>;
 
 const HomeScreen: FC<HomeScreenProps> = () => {
+  // const currentUser = getAuth().currentUser;
+
+  // const uid = await getFirestore().collection('users').doc(uid).get();
+  // const userProfile = userDoc.data();
+
   const handleLogout = async () => {
     try {
       await signOut(getAuth());
@@ -27,7 +32,6 @@ const HomeScreen: FC<HomeScreenProps> = () => {
       <View
         style={{
           width: '100%',
-          //flex: 0.3,
           backgroundColor: '#3491DB',
           padding: 24,
         }}>
