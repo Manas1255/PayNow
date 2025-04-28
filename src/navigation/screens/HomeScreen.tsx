@@ -1,6 +1,7 @@
 import {getAuth, signOut} from '@react-native-firebase/auth';
+import {getFirestore} from '@react-native-firebase/firestore';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {FC} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {HomeStackParams} from '../HomeStack';
@@ -15,10 +16,25 @@ import {color} from '../utils/theme';
 type HomeScreenProps = NativeStackScreenProps<HomeStackParams, 'HomeScreen'>;
 
 const HomeScreen: FC<HomeScreenProps> = () => {
-  // const currentUser = getAuth().currentUser;
+  const [userData, setUserData] = useState();
 
-  // const uid = await getFirestore().collection('users').doc(uid).get();
-  // const userProfile = userDoc.data();
+  const fetchCurrentUser = async () => {
+    const currentUser = getAuth().currentUser;
+
+    if (currentUser) {
+      const userDoc = await getFirestore()
+        .collection('users')
+        .doc(currentUser.uid)
+        .get();
+
+      const userProfile = userDoc.data();
+      setUserData(userProfile);
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -41,7 +57,7 @@ const HomeScreen: FC<HomeScreenProps> = () => {
         </View>
 
         <View style={{marginTop: 32}}>
-          <Text style={{color: color.white}}>Hi, Anas!</Text>
+          <Text style={{color: color.white}}>Hi, {userData?.name}!</Text>
           <Text style={{color: color.white, marginTop: 16, fontSize: 24}}>
             Total Balance
           </Text>
@@ -55,7 +71,7 @@ const HomeScreen: FC<HomeScreenProps> = () => {
             alignItems: 'center',
           }}>
           <Text style={{color: color.white, fontSize: 32, fontWeight: 'bold'}}>
-            $123.4
+            ${userData?.balance}
           </Text>
           <NotificationsIcon />
         </View>
