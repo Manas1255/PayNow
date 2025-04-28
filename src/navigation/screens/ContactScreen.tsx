@@ -20,13 +20,11 @@ type ContactScreenProps = NativeStackScreenProps<
   'ContactScreen'
 >;
 
-const ContactScreen: FC<ContactScreenProps> = () => {
+const ContactScreen: FC<ContactScreenProps> = ({navigation}) => {
   const dispatch = useDispatch<AppDispatch>();
   const {users, loading, error} = useSelector(
     (state: RootState) => state.contacts,
   );
-
-  console.log('users ', users);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -84,7 +82,8 @@ const ContactScreen: FC<ContactScreenProps> = () => {
                 borderRadius: 8,
                 alignItems: 'center',
                 justifyContent: 'center',
-              }}>
+              }}
+              onPress={() => navigation.navigate('SendMoneyScreen')}>
               <SendIcon />
             </TouchableOpacity>
 

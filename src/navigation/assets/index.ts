@@ -4,6 +4,7 @@ import onBoardingIcon2 from './images/onboarding-2.png';
 import onBoardingIcon3 from './images/onboarding-3.png';
 import paynowLogo from './images/paynow-logo.png';
 
+import BackIcon from './images/back-icon.svg';
 import EmptyTransactionsIcon from './images/empty-transactions-icon.svg';
 import HomeIcon from './images/home-icon.svg';
 import NotificationsIcon from './images/notifications-icon.svg';
@@ -11,6 +12,7 @@ import RequestIcon from './images/request-icon.svg';
 import SendIcon from './images/send-icon.svg';
 
 export {
+  BackIcon,
   dummyProfilePic,
   EmptyTransactionsIcon,
   HomeIcon,
