@@ -83,7 +83,9 @@ const ContactScreen: FC<ContactScreenProps> = ({navigation}) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onPress={() => navigation.navigate('SendMoneyScreen')}>
+              onPress={() =>
+                navigation.navigate('SendMoneyScreen', {userID: user})
+              }>
               <SendIcon />
             </TouchableOpacity>
 

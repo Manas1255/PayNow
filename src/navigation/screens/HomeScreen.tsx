@@ -12,11 +12,12 @@ import {
   SendIcon,
 } from '../assets';
 import {color} from '../utils/theme';
+import {UserProfile} from '../utils/types';
 
 type HomeScreenProps = NativeStackScreenProps<HomeStackParams, 'HomeScreen'>;
 
 const HomeScreen: FC<HomeScreenProps> = () => {
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState<UserProfile>();
 
   const fetchCurrentUser = async () => {
     const currentUser = getAuth().currentUser;
